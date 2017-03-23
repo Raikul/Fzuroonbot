@@ -136,7 +136,7 @@ class WebhookHandler(webapp2.RequestHandler):
             reply('yes')
         else:
             if getEnabled(chat_id):
-                reply('I got your message! (but I do not know how to answer)')
+                reply('Bananas! (but I do not know how to answer)')
             else:
                 logging.info('not enabled for chat_id {}'.format(chat_id))
 
