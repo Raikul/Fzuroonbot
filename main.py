@@ -149,10 +149,10 @@ class WebhookHandler(webapp2.RequestHandler):
             html = response.read()
             
             #reply(html.decode('utf-8', errors='ignore'))
-            reply(html)
+            #reply(html)
             
             parsed_html = BeautifulSoup(html)
-            parsed_html.body.find('div', attrs={'class':'ra'}).text
+            reply(parsed_html.body.find('div', attrs={'class':'ra'}).text)
             
             reply('Over.')
         else:
