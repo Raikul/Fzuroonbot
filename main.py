@@ -1,9 +1,15 @@
+# -*- coding: UTF-8 -*-
 import StringIO
 import json
 import logging
 import random
 import urllib
 import urllib2
+
+import sys
+sys.path.insert(0, 'libs')
+
+from bs4 import BeautifulSoup
 
 # for sending images
 from PIL import Image
@@ -90,7 +96,7 @@ class WebhookHandler(webapp2.RequestHandler):
             if msg:
                 resp = urllib2.urlopen(BASE_URL + 'sendMessage', urllib.urlencode({
                     'chat_id': str(chat_id),
-                    'text': msg.encode('utf-8'),
+                    'text': msg,#.encode('utf-8'),
                     'disable_web_page_preview': 'true',
                     'reply_to_message_id': str(message_id),
                 })).read()
@@ -138,10 +144,17 @@ class WebhookHandler(webapp2.RequestHandler):
         elif 'test' in text:
             reply('yes')
         elif text == 'ra':
-         response = urllib2.urlopen('http://www.lawofone.info/results.php?q=rasputin')
-         html = response.read()   
-
+            response = urllib2.urlopen('http://www.lawofone.info/results.php?q=rasputin')
+            #response = urllib2.urlopen('http://hasthelargehadroncolliderdestroyedtheworldyet.com/')
+            html = response.read()
             
+            #reply(html.decode('utf-8', errors='ignore'))
+            reply(html)
+            
+            parsed_html = BeautifulSoup(html)
+            parsed_html.body.find('div', attrs={'class':'ra'}).text
+            
+            reply('Over.')
         else:
             if getEnabled(chat_id):
                 reply('Bananas! (but I do not know how to answer)')
