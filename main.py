@@ -123,6 +123,9 @@ class WebhookHandler(webapp2.RequestHandler):
                 output = StringIO.StringIO()
                 img.save(output, 'JPEG')
                 reply(img=output.getvalue())
+                
+                #custom
+            
             else:
                 reply('What command?')
 
@@ -134,6 +137,11 @@ class WebhookHandler(webapp2.RequestHandler):
             reply('look at the corner of your screen!')
         elif 'test' in text:
             reply('yes')
+        elif text == 'ra':
+         response = urllib2.urlopen('http://www.lawofone.info/results.php?q=rasputin')
+         html = response.read()   
+
+            
         else:
             if getEnabled(chat_id):
                 reply('Bananas! (but I do not know how to answer)')
